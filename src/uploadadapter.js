@@ -1,8 +1,8 @@
 export default class UploadAdapter {
-    constructor(loader, uploadUrl, csrfToken, t) {
+    constructor(loader, uploadUrl, headers, t) {
         this.loader = loader;
         this.uploadUrl = uploadUrl;
-        this.csrfToken = csrfToken;
+        this.headers = headers;
         this.t = t;
     }
 
@@ -18,7 +18,7 @@ export default class UploadAdapter {
     abort() {
         if (this.xhr) {
             this.xhr.abort();
-        }    
+        }
     }
 
     _initRequest() {
@@ -27,10 +27,10 @@ export default class UploadAdapter {
         xhr.responseType = 'json';
     }
 
-    _initListeners(resolve, reject, file ) {
+    _initListeners(resolve, reject, file) {
         const xhr = this.xhr;
         const loader = this.loader;
-        const genericErrorText = 'Couldn\'t upload file: ${ file.name }.';
+        const genericErrorText = "Couldn\'t upload file: " + file.name + ".";
 
         xhr.addEventListener('error', () => reject(genericErrorText));
         xhr.addEventListener('abort', () => reject());
@@ -45,12 +45,26 @@ export default class UploadAdapter {
                 default: response.url
             });
         });
+
+        if (xhr.upload) {
+            xhr.upload.addEventListener('progress', evt => {
+                if (evt.lengthComputable) {
+                    loader.uploadTotal = evt.total;
+                    loader.uploaded = evt.loaded;
+                }
+            });
+        }
     }
 
     _sendRequest(file) {
         const data = new FormData();
+
         data.append('upload', file);
-        this.xhr.setRequestHeader('RequestVerificationToken', this.csrfToken);
+
+        var headers = Object.keys(this.headers);
+        for (var h = 0; h < headers.length; h++) {
+            this.xhr.setRequestHeader(headers[h], this.headers[headers[h]]);
+        }
 
         this.xhr.send(data);
     }
