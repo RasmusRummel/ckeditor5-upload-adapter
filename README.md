@@ -51,14 +51,14 @@ ClassicEditor.create(document.querySelector('#editor'), {
         uploadUrl: '/home/ImageUpload', // url to server-side http endpoint // mandatory
         headers : { "headerKey1": "headerValue1", "headerKey2", "headerValue2" } // optional. Eg. in asp.net core for CSRF prevention you would have headers : { "RequestVerificationToken": _serverSideGeneratedCSRFToken }
     }
-	// ...
+        // ...
 });
 ```
 
 <br />//#3 : Create a server-side http endpoint to which the file (eg. image) is uploaded :
 
-// Http endpoint example in asp.net core c# 
-<br />(full code example available in official documentation : [How to custom build CKEditor 5 with image upload support](https://topiqs.online/1120) :
+// Http endpoint example in asp.net core c# :
+<br />(full code example available in official documentation : [How to custom build CKEditor 5 with image upload support](https://topiqs.online/1120))
 ```javaqscript
 [HttpPost]
 public JsonResult ImageUpload(IFormFile file)
