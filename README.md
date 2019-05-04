@@ -15,7 +15,7 @@ Full ckeditor5-upload-adapter official documentation here : [How to custom build
 //#1 : In your CKEditor5 build file REMOVE any reference to CKFinder & EasyImage and ADD references to ckeditor5-upload-adapter:
 
 ```javaqscript
-// src/ckeditor.js
+// app.js
 
 import AutoformatPlugin from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
