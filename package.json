@@ -1,6 +1,6 @@
 {
   "name": "ckeditor5-upload-adapter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Upload-Adapter for CKEditor5, eg. for uploading images.",
   "keywords": [
     "ckeditor 5",
