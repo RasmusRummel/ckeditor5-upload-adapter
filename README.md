@@ -1,13 +1,14 @@
 # ckeditor5-upload-adapter
 
+ckeditor5-upload-adapter is a 3. party free upload adapter for CKEditor 5 that also supports CSRF prevention then uploading images.
+
 If you want to upload images in CKEditor 5, you have the following options : 
 * Pay for a commercial upload adapter (CKFinder or EasyImage)
 * Use a free 3. party upload adapter (such as ckeditor5-upload-adapter)
 * Roll your own upload adapter
 
-ckeditor5-upload-adapter is a 3. party free upload adapter for CKEditor 5 that also supports CSRF prevention then uploading images.
 
-Full official documentation here : [How to custom build CKEditor 5 with image upload support](https://topiqs.online/1120).
+Full ckeditor5-upload-adapter official documentation here : [How to custom build CKEditor 5 with image upload support](https://topiqs.online/1120).
 <br />The full documentation also contains step-by-step creation of editor, http endpoint and CSRF prevention.
 <br />Below is a short usage documentation. 
 
