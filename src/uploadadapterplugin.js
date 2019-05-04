@@ -10,7 +10,7 @@ export default class UploadAdapterPlugin extends Plugin {
 
     init() {
         const uploadUrl = this.editor.config.get('uploadAdapter.uploadUrl');
-        const csrfToken = this.editor.config.get['uploadAdapter.csrfToken'];
+        const headers = this.editor.config.get('uploadAdapter.headers');
         const t = this.editor.t;
 
         if (!uploadUrl) {
@@ -19,7 +19,7 @@ export default class UploadAdapterPlugin extends Plugin {
         }
 
         this.editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-            return new UploadAdapter(loader, uploadUrl, csrfToken, t);
+            return new UploadAdapter(loader, uploadUrl, headers, t);
         };
     }
 }
