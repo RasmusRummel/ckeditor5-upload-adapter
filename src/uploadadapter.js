@@ -61,9 +61,11 @@ export default class UploadAdapter {
 
         data.append('upload', file);
 
-        var headers = Object.keys(this.headers);
-        for (var h = 0; h < headers.length; h++) {
-            this.xhr.setRequestHeader(headers[h], this.headers[headers[h]]);
+        if (this.headers) {
+            var headers = Object.keys(this.headers);
+            for (var h = 0; h < headers.length; h++) {
+                this.xhr.setRequestHeader(headers[h], this.headers[headers[h]]);
+            }
         }
 
         this.xhr.send(data);
