@@ -1,25 +1,21 @@
 {
-  "name": "ckeditor5-upload-adapter",
-  "version": "1.0.3",
-  "description": "Upload-Adapter for CKEditor5, eg. for uploading images.",
+  "name": "@ckpro/ckeditor5-upload-adapter",
+  "version": "2.0.1",
+  "description": "Upload Adapter for CKEditor 5 for uploading images & other files.",
   "keywords": [
     "ckeditor 5",
-    "image",
     "upload",
-    "adapter"
+    "image"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/RasmusRummel/ckeditor5-upload-adapter.git"
-  },
   "files": [
     "src"
   ],
-  "main": "src/uploadadapterplugin.js",
+  "main": "src/uploadadapter.js",
   "author": "Rasmus Rummel",
   "license": "MIT",
+  "homepage": "https://topiqs.online/1120",
   "dependencies": {
-    "@ckeditor/ckeditor5-core": "*",
-    "@ckeditor/ckeditor5-upload": "*"
+    "@ckeditor/ckeditor5-core": "x",
+    "@ckeditor/ckeditor5-upload": "x"
   }
 }
