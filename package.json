@@ -1,21 +1,93 @@
+
+# @ckpro/ckeditor5-upload-adapter
+
+Upload images (and other files) using either Fetch or xmlHttpRequest.
+
+<img align="right" src="https://topiqs.online/FileServer/ContentImages/11b6bd1a1ce645a9abafbcb885b2736c_thumb.png">
+
+If you want to upload images in CKEditor 5, you have the following options : 
+
+* Pay for a commercial upload adapter (CKFinder or EasyImage)
+* Use a free 3. party upload adapter (such as @ckpro/ckeditor5-upload-adapter)
+* Roll your own upload adapter
+
+<br /><br />
+
+**@ckpro/ckeditor5-upload-adapter** is a free modern upload adapter for CKEditor 5 that supports not only Fetch but also CSRF prevention.
+
+
+Full @ckpro/ckeditor5-upload-adapter official documentation here : [How to custom build CKEditor 5 with image upload support](https://topiqs.online/1120). The full documentation also contains step-by-step creation of **editor**, **http endpoint** and **CSRF prevention**.
+
+<br />Below is a short usage documentation. 
+
+//#1 : In your CKEditor5 build file REMOVE any reference to CKFinder & EasyImage and ADD references to ckeditor5-upload-adapter:
+
+```javaqscript
+// app.js
+
+import ClassicEditorBase from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
+import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
+//import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder'; // Remove this if it exists
+//import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage'; // Remove this if it exists
+import Image from '@ckeditor/ckeditor5-image/src/image'; // Mandatory
+import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'; // Mandatory
+import UploadAdapter from '@ckpro/ckeditor5-upload-adapter'; // Add this
+// ...
+
+ClassicEditor.builtinPlugins = [
+    Essentials,
+    Bold,
+    //CKFinder, // Remove this if it exists
+    //EasyImage, // Remove this if it exists
+    Image, // Mandatory
+    ImageUpload, // Mandatory
+    UploadAdapter // Add this 
+    // ...
+]
+```
+
+<br />//#2 : Then creating the CKEditor 5 set the UploadAdapter properties : uploadUrl (mandatory), useFetch (optional) & any headers (optional) :
+
+```javaqscript
+ClassicEditor.create(document.querySelector('#editor'), {
+    uploadAdapter: {
+        uploadUrl: '/home/ImageUpload', // mandatory (url to server-side http endpoint)
+        useFetch: true, // optional
+        headers : { "headerKey1": "headerValue1", "headerKey2": "headerValue2" } // optional (eg. in asp.net core for CSRF prevention you would have headers : { "RequestVerificationToken": _serverSideGeneratedCSRFToken })
+    }
+        // ...
+});
+```
+
+<br />//#3 : Create a server-side http endpoint to which the (image) file is uploaded :
+
+// Http endpoint example in asp.net core c# :
+<br />(full code example available in official documentation : [How to custom build CKEditor 5 with image upload support](https://topiqs.online/1120))
+```javaqscript
+[HttpPost]
+public JsonResult ImageUpload(IFormFile file)
 {
-  "name": "@ckpro/ckeditor5-upload-adapter",
-  "version": "2.0.1",
-  "description": "Upload Adapter for CKEditor 5 for uploading images & other files.",
-  "keywords": [
-    "ckeditor 5",
-    "upload",
-    "image"
-  ],
-  "files": [
-    "src"
-  ],
-  "main": "src/uploadadapter.js",
-  "author": "Rasmus Rummel",
-  "license": "MIT",
-  "homepage": "https://topiqs.online/1120",
-  "dependencies": {
-    "@ckeditor/ckeditor5-core": "x",
-    "@ckeditor/ckeditor5-upload": "x"
-  }
+	string error = "";
+	string serverUrlToFile;
+
+	// do your stuff with the (image) file, save it on your server and initialize serverUrlToFile with a public url to the saved (image) file
+
+	if (error)
+	{
+		return Json(new
+		{
+			uploaded = false,
+			error = error
+		});
+	}
+	else
+	{
+		return Json(new
+		{
+			uploaded = true,
+			url = serverUrlToFile // the public url to the (image) file you have saved on your server
+		});
+	}
 }
+```
